@@ -1,8 +1,7 @@
 {
     "compilerOptions": {
-      "target": "esnext",
+      "target": "es5",
       "lib": ["dom", "dom.iterable", "esnext"],
-      "useDefineForClassFields": true,
       "allowJs": true,
       "skipLibCheck": true,
       "esModuleInterop": true,
@@ -16,5 +15,5 @@
       "noEmit": true,
       "jsx": "react-jsx"
     },
-    "include": ["./src"]
+    "include": ["src"]
   }
