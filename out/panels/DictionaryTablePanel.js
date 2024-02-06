@@ -14,7 +14,6 @@ const vscode_1 = require("vscode");
 const getUri_1 = require("../utilities/getUri");
 const getNonce_1 = require("../utilities/getNonce");
 const vscode = require("vscode");
-// import { Dictionary } from "codex-types";
 /**
  * This class manages the state and behavior of HelloWorld webview panels.
  *
@@ -37,15 +36,18 @@ class DictionaryTablePanel {
         this._panel = panel;
         const initAsync = () => __awaiter(this, void 0, void 0, function* () {
             const uri = vscode.Uri.joinPath(extensionUri, 'dictionary.dictionary');
-            const fileData = yield (vscode.workspace.fs.readFile(uri)); //fileData: Dictionary
+            const fileData = yield (vscode.workspace.fs.readFile(uri));
             const data = new TextDecoder().decode(fileData);
-            // console.log('decoded data from file\n' + { data });
+            console.log("Decoded, unparsed dictionary data:", data);
+            const dictionary = JSON.parse(data);
+            console.log("Parsed dictionary:", dictionary);
             // Set the HTML content for the webview panel
             this._panel.webview.html = this._getWebviewContent(this._panel.webview, extensionUri);
             // Set an event listener to listen for messages passed from the webview context
             this._setWebviewMessageListener(this._panel.webview, uri);
             // Post message to app
-            this._panel.webview.postMessage({ command: "sendData", data: data });
+            console.log("Sending dictionary to webview:", dictionary);
+            this._panel.webview.postMessage({ command: "sendData", data: dictionary });
         });
         initAsync().catch(console.error);
         // Set an event listener to listen for when the panel is disposed (i.e. when the user closes

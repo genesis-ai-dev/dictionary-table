@@ -7,13 +7,15 @@ import {
   shortId,
   // makeData,
   transformToTableData,
-  transformToJSONFormat,
+  transformToDictionaryFormat,
   ActionTypes,
   DataTypes,
 } from './utils';
 import update from 'immutability-helper';
 //@ts-ignore
 // const vscode = acquireVsCodeApi();
+import { Dictionary } from 'codex-types';
+
 
 function reducer(state: any, action: any) {
   console.log({ action });
@@ -190,7 +192,8 @@ function reducer(state: any, action: any) {
         ...state,
         data: action.data,
         columns: action.columns,
-        skipReset: false,
+        // skipReset: false,
+        dictionary: action.dictionary,
       };
     default:
       return state;
@@ -216,31 +219,36 @@ function App() {
   }, [state.data, state.columns]);
 
   useEffect(() => {
-    const tableData = { data: state.data, columns: state.columns }; // Adjust according to the actual structure
-    const jsonData = transformToJSONFormat(tableData);
-    vscode.postMessage({
-      command: 'updateData',
-      data: jsonData,
-    });
-    console.log('Data changed and sent back');
-  }, [state.data, state.columns]);
+    if (state.data.length > 0 && state.columns.length > 0) {
+      const tableData = { data: state.data, columns: state.columns }; // Adjust according to the actual structure
+      const dictionaryData = transformToDictionaryFormat(tableData, state.dictionary);
+      vscode.postMessage({
+        command: 'updateData',
+        data: dictionaryData,
+      });
+      console.log('Data changed and sent back');
+    }
+  }, [state.data, state.columns, state.dictionary]);
 
   useEffect(() => {
     //once was function, not const
     // function handleReceiveMessage(event: any) {
     const handleReceiveMessage =  (event: MessageEvent) => {
+      console.log("Received event:");
+      console.log({ event });
       const message = event.data; // The JSON data our extension sent
-      console.log({ message });
       switch (message.command) {
         case 'sendData': {
-          console.log('decoded data from file and received in hook');
-          console.log({ message });
-          const jsonData = JSON.parse(message.data); 
-          const tableData = transformToTableData(jsonData);
+          // const dictionary = JSON.parse(message.data); 
+          const dictionary: Dictionary = message.data;
+          console.log('Dictionary before transformation:');
+          console.log({ dictionary });
+          const tableData = transformToTableData(dictionary);
           dispatch({
             type: ActionTypes.LOAD_DATA,
             data: tableData.data,
             columns: tableData.columns,
+            dictionary: dictionary,
           });
           break;
         }
@@ -255,10 +263,10 @@ function App() {
   }, []);
 
   // post message back to extension
-  vscode.postMessage({
-    command: 'dataReceived',
-    data: state,
-  });
+  // vscode.postMessage({
+  //   command: 'dataReceived',
+  //   data: state,
+  // });
 
 
   return (

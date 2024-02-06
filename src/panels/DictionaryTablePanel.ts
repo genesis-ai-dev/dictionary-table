@@ -2,7 +2,7 @@ import { Disposable, Webview, WebviewPanel, window, Uri, ViewColumn } from "vsco
 import { getUri } from "../utilities/getUri";
 import { getNonce } from "../utilities/getNonce";
 import * as vscode from "vscode";
-// import { Dictionary } from "codex-types";
+import { Dictionary } from "codex-types";
 
 /**
  * This class manages the state and behavior of HelloWorld webview panels.
@@ -31,9 +31,11 @@ export class DictionaryTablePanel {
 
     const initAsync = async () => {
       const uri = vscode.Uri.joinPath(extensionUri, 'dictionary.dictionary');
-      const fileData = await (vscode.workspace.fs.readFile(uri)); //fileData: Dictionary
+      const fileData = await (vscode.workspace.fs.readFile(uri));
       const data = new TextDecoder().decode(fileData);
-      // console.log('decoded data from file\n' + { data });
+      console.log("Decoded, unparsed dictionary data:", data);
+      const dictionary: Dictionary = JSON.parse(data);
+      console.log("Parsed dictionary:", dictionary);
       
       // Set the HTML content for the webview panel
       this._panel.webview.html = this._getWebviewContent(this._panel.webview, extensionUri);
@@ -42,7 +44,8 @@ export class DictionaryTablePanel {
       this._setWebviewMessageListener(this._panel.webview, uri);
 
       // Post message to app
-      this._panel.webview.postMessage({ command: "sendData", data: data });
+      console.log("Sending dictionary to webview:", dictionary);
+      this._panel.webview.postMessage({ command: "sendData", data: dictionary });
     };
 
     initAsync().catch(console.error);
