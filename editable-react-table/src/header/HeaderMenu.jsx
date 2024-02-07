@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import ArrowUpIcon from '../img/ArrowUp';
 import ArrowDownIcon from '../img/ArrowDown';
-import ArrowLeftIcon from '../img/ArrowLeft';
-import ArrowRightIcon from '../img/ArrowRight';
-import TrashIcon from '../img/Trash';
+// import ArrowLeftIcon from '../img/ArrowLeft';
+// import ArrowRightIcon from '../img/ArrowRight';
+// import TrashIcon from '../img/Trash';
 import { grey } from '../colors';
-import TypesMenu from './TypesMenu';
+// import TypesMenu from './TypesMenu';
 import { usePopper } from 'react-popper';
 import { ActionTypes, shortId } from '../utils';
-import DataTypeIcon from './DataTypeIcon';
+// import DataTypeIcon from './DataTypeIcon';
 
 export default function HeaderMenu({
   label,
@@ -24,16 +24,16 @@ export default function HeaderMenu({
   const [header, setHeader] = useState(label);
   const [typeReferenceElement, setTypeReferenceElement] = useState(null);
   const [typePopperElement, setTypePopperElement] = useState(null);
-  const typePopper = usePopper(typeReferenceElement, typePopperElement, {
-    placement: 'right',
-    strategy: 'fixed',
-  });
+  // const typePopper = usePopper(typeReferenceElement, typePopperElement, {
+  //   placement: 'right',
+  //   strategy: 'fixed',
+  // });
   const [showTypeMenu, setShowTypeMenu] = useState(false);
 
-  function onTypeMenuClose() {
-    setShowTypeMenu(false);
-    setShowHeaderMenu(false);
-  }
+  // function onTypeMenuClose() {
+  //   setShowTypeMenu(false);
+  //   setShowHeaderMenu(false);
+  // }
 
   useEffect(() => {
     setHeader(label);
@@ -73,73 +73,73 @@ export default function HeaderMenu({
       icon: <ArrowDownIcon />,
       label: 'Sort descending',
     },
-    {
-      onClick: e => {
-        dataDispatch({
-          type: ActionTypes.UPDATE_COLUMN_HEADER,
-          columnId,
-          label: header,
-        });
-        dataDispatch({
-          type: ActionTypes.ADD_COLUMN_TO_LEFT,
-          columnId,
-          focus: false,
-        });
-        setShowHeaderMenu(false);
-      },
-      icon: <ArrowLeftIcon />,
-      label: 'Insert left',
-    },
-    {
-      onClick: e => {
-        dataDispatch({
-          type: ActionTypes.UPDATE_COLUMN_HEADER,
-          columnId,
-          label: header,
-        });
-        dataDispatch({
-          type: ActionTypes.ADD_COLUMN_TO_RIGHT,
-          columnId,
-          focus: false,
-        });
-        setShowHeaderMenu(false);
-      },
-      icon: <ArrowRightIcon />,
-      label: 'Insert right',
-    },
-    {
-      onClick: e => {
-        dataDispatch({ type: ActionTypes.DELETE_COLUMN, columnId });
-        setShowHeaderMenu(false);
-      },
-      icon: <TrashIcon />,
-      label: 'Delete',
-    },
+    // {
+    //   onClick: e => {
+    //     dataDispatch({
+    //       type: ActionTypes.UPDATE_COLUMN_HEADER,
+    //       columnId,
+    //       label: header,
+    //     });
+    //     dataDispatch({
+    //       type: ActionTypes.ADD_COLUMN_TO_LEFT,
+    //       columnId,
+    //       focus: false,
+    //     });
+    //     setShowHeaderMenu(false);
+    //   },
+    //   icon: <ArrowLeftIcon />,
+    //   label: 'Insert left',
+    // },
+    // {
+    //   onClick: e => {
+    //     dataDispatch({
+    //       type: ActionTypes.UPDATE_COLUMN_HEADER,
+    //       columnId,
+    //       label: header,
+    //     });
+    //     dataDispatch({
+    //       type: ActionTypes.ADD_COLUMN_TO_RIGHT,
+    //       columnId,
+    //       focus: false,
+    //     });
+    //     setShowHeaderMenu(false);
+    //   },
+    //   icon: <ArrowRightIcon />,
+    //   label: 'Insert right',
+    // },
+    // {
+    //   onClick: e => {
+    //     dataDispatch({ type: ActionTypes.DELETE_COLUMN, columnId });
+    //     setShowHeaderMenu(false);
+    //   },
+    //   icon: <TrashIcon />,
+    //   label: 'Delete',
+    // },
   ];
 
-  function handleColumnNameKeyDown(e) {
-    if (e.key === 'Enter') {
-      dataDispatch({
-        type: ActionTypes.UPDATE_COLUMN_HEADER,
-        columnId,
-        label: header,
-      });
-      setShowHeaderMenu(false);
-    }
-  }
+  // function handleColumnNameKeyDown(e) {
+  //   if (e.key === 'Enter') {
+  //     dataDispatch({
+  //       type: ActionTypes.UPDATE_COLUMN_HEADER,
+  //       columnId,
+  //       label: header,
+  //     });
+  //     setShowHeaderMenu(false);
+  //   }
+  // }
 
-  function handleColumnNameChange(e) {
-    setHeader(e.target.value);
-  }
+  // function handleColumnNameChange(e) {
+  //   setHeader(e.target.value);
+  // }
 
-  function handleColumnNameBlur(e) {
-    e.preventDefault();
-    dataDispatch({
-      type: ActionTypes.UPDATE_COLUMN_HEADER,
-      columnId,
-      label: header,
-    });
-  }
+  // function handleColumnNameBlur(e) {
+  //   e.preventDefault();
+  //   dataDispatch({
+  //     type: ActionTypes.UPDATE_COLUMN_HEADER,
+  //     columnId,
+  //     label: header,
+  //   });
+  // }
 
   return (
     <div
@@ -160,7 +160,7 @@ export default function HeaderMenu({
             paddingRight: '0.75rem',
           }}
         >
-          <div className="is-fullwidth" style={{ marginBottom: 12 }}>
+          {/* <div className="is-fullwidth" style={{ marginBottom: 12 }}>
             <input
               className="form-input is-fullwidth"
               ref={setInputRef}
@@ -173,9 +173,9 @@ export default function HeaderMenu({
           </div>
           <span className="font-weight-600 font-size-75 color-grey-500 text-transform-uppercase">
             Property Type
-          </span>
+          </span> */}
         </div>
-        <div className="list-padding">
+        {/* <div className="list-padding">
           <button
             className="sort-button"
             type="button"
@@ -198,7 +198,7 @@ export default function HeaderMenu({
               dataDispatch={dataDispatch}
             />
           )}
-        </div>
+        </div> */}
         <div style={{ borderTop: `2px solid ${grey(200)}` }} />
         <div className="list-padding">
           {buttons.map(button => (

@@ -35,9 +35,14 @@ class DictionaryTablePanel {
         this._disposables = [];
         this._panel = panel;
         const initAsync = () => __awaiter(this, void 0, void 0, function* () {
-            const uri = vscode.Uri.joinPath(extensionUri, 'dictionary.dictionary');
-            const fileData = yield (vscode.workspace.fs.readFile(uri));
-            const data = new TextDecoder().decode(fileData);
+            // const uri = vscode.Uri.joinPath(extensionUri, 'dictionary.dictionary');
+            // const fileData = await (vscode.workspace.fs.readFile(uri));
+            // const data = new TextDecoder().decode(fileData);
+            const { data, uri } = yield FileHandler.readFile('Dictionary/dictionary.dictionary');
+            // return if no data
+            if (!data) {
+                return;
+            }
             console.log("Decoded, unparsed dictionary data:", data);
             const dictionary = JSON.parse(data);
             console.log("Parsed dictionary:", dictionary);
@@ -165,4 +170,44 @@ class DictionaryTablePanel {
     }
 }
 exports.DictionaryTablePanel = DictionaryTablePanel;
+class FileHandler {
+    static readFile(filePath) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (!vscode.workspace.workspaceFolders) {
+                    throw new Error("No workspace folder found");
+                }
+                const workspaceFolder = (_a = vscode.workspace.workspaceFolders) === null || _a === void 0 ? void 0 : _a[0].uri;
+                const fileUri = vscode.Uri.joinPath(workspaceFolder, filePath);
+                const fileData = yield vscode.workspace.fs.readFile(fileUri);
+                const data = new TextDecoder().decode(fileData);
+                return { data, uri: fileUri };
+            }
+            catch (error) {
+                vscode.window.showErrorMessage(`Error reading file: ${filePath}`);
+                console.error({ error });
+                return { data: undefined, uri: undefined };
+            }
+        });
+    }
+    static writeFile(filePath, data) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (!vscode.workspace.workspaceFolders) {
+                    throw new Error("No workspace folder found");
+                }
+                const workspaceFolder = (_a = vscode.workspace.workspaceFolders) === null || _a === void 0 ? void 0 : _a[0].uri;
+                const fileUri = vscode.Uri.joinPath(workspaceFolder, filePath);
+                const fileData = new TextEncoder().encode(data);
+                yield vscode.workspace.fs.writeFile(fileUri, fileData);
+            }
+            catch (error) {
+                console.error({ error });
+                vscode.window.showErrorMessage(`Error writing to file: ${filePath}`);
+            }
+        });
+    }
+}
 //# sourceMappingURL=DictionaryTablePanel.js.map

@@ -5,15 +5,12 @@ import Table from './Table';
 import {
   randomColor,
   shortId,
-  // makeData,
   transformToTableData,
   transformToDictionaryFormat,
   ActionTypes,
   DataTypes,
 } from './utils';
 import update from 'immutability-helper';
-//@ts-ignore
-// const vscode = acquireVsCodeApi();
 import { Dictionary } from 'codex-types';
 
 
@@ -200,18 +197,9 @@ function reducer(state: any, action: any) {
   }
 }
 
-// declare global {
-//   interface Window {
-//     initialData: any;
-//   }
-// }
 
 function App() {
-  // const data = window.initialData;
-  console.log('Hello from react table webview!');
-  // const [state, dispatch] = useReducer(reducer, makeData(1000));
   const [state, dispatch] = useReducer(reducer, { columns: [], data: [], skipReset: false });
-
 
   useEffect(() => {
     dispatch({ type: ActionTypes.ENABLE_RESET });
@@ -261,13 +249,6 @@ function App() {
       window.removeEventListener('message', handleReceiveMessage);
     };
   }, []);
-
-  // post message back to extension
-  // vscode.postMessage({
-  //   command: 'dataReceived',
-  //   data: state,
-  // });
-
 
   return (
     <div

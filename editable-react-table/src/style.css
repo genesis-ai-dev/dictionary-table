@@ -154,6 +154,7 @@ html {
   width: 100vw;
   z-index: 2;
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .sort-button {
@@ -383,6 +384,7 @@ html {
 
 .list-padding {
   padding: 4px 0px;
+  border: 1px solid var(--vscode-editor-lineHighlightBackground);
 }
 
 .bg-grey-200 {
