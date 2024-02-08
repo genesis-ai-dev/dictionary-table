@@ -11,13 +11,16 @@ export function transformToTableData(dictionary) {
   const data = dictionary.entries;
 
   let columns = [];
-  // let scrollColumn = {
-  //   id: Constants.ADD_COLUMN_ID,
-  //   width: 5,
-  //   label: ' ',
-  //   disableResizing: true,
-  //   dataType: 'null',
-  // };
+  let checkboxColumn = {
+    // id: Constants.ADD_COLUMN_ID,
+    id: Constants.CHECKBOX_COLUMN_ID,
+    label: '.',
+    accessor: 'checkbox_column',
+    minWidth: 30,
+    disableResizing: true,
+    dataType: DataTypes.CHECKBOX,
+    options: [],
+  };
 
   // Create columns in required format and according to the first entry in the data
   if (data.length > 0) {
@@ -31,7 +34,7 @@ export function transformToTableData(dictionary) {
       options: []
     }));
     // Add the scroll column
-    // columns.push(scrollColumn);
+    columns.push(checkboxColumn);
   }
 
   return { columns, data, skipReset: false };
@@ -60,8 +63,10 @@ export const DataTypes = Object.freeze({
   NUMBER: 'number',
   TEXT: 'text',
   SELECT: 'select',
+  CHECKBOX: 'checkbox',
 });
 
 export const Constants = Object.freeze({
   ADD_COLUMN_ID: 999999,
+  CHECKBOX_COLUMN_ID: 'checkbox_column',
 });

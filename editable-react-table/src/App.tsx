@@ -37,9 +37,10 @@ function reducer(state: any, action: any) {
         },
       });
     case ActionTypes.ADD_ROW:
+      const newId = generateUniqueId(state.data);
       return update(state, {
-        skipReset: { $set: true },
-        data: { $push: [{}] },
+      skipReset: { $set: true },
+      data: { $push: [{ id: newId }] },
       });
     case ActionTypes.UPDATE_COLUMN_TYPE:
       const typeIndex = state.columns.findIndex(
@@ -195,6 +196,14 @@ function reducer(state: any, action: any) {
     default:
       return state;
   }
+}
+
+function generateUniqueId(data: any) {
+  let newId: string;
+  do {
+  newId = shortId();
+  } while (data.some((row: {id: string }) => row.id === newId));
+  return newId;
 }
 
 

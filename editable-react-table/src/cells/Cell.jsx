@@ -3,6 +3,7 @@ import { DataTypes } from '../utils';
 import TextCell from './TextCell';
 import NumberCell from './NumberCell';
 import SelectCell from './SelectCell';
+import CheckboxCell from './CheckboxCell';
 
 export default function Cell({
   value: initialValue,
@@ -35,6 +36,14 @@ export default function Cell({
           <SelectCell
             initialValue={initialValue}
             options={options}
+            rowIndex={index}
+            columnId={id}
+            dataDispatch={dataDispatch}
+          />
+        );
+      case DataTypes.CHECKBOX:
+        return (
+          <CheckboxCell
             rowIndex={index}
             columnId={id}
             dataDispatch={dataDispatch}

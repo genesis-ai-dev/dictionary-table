@@ -33,6 +33,16 @@ export default function Header({
           getHeaderProps={getHeaderProps}
         />
       );
+    } else if (id === Constants.CHECKBOX_COLUMN_ID) {
+      // Handle the checkbox column header specifically
+      // For example, return a simple header without the add column functionality
+      return (
+        <div {...getHeaderProps()} className="th noselect d-inline-block">
+          <div className="th-content">
+            {label}
+          </div>
+        </div>
+      );
     }
 
     return (

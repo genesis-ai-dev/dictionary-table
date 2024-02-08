@@ -12,23 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = void 0;
 // import * as vscode from "vscode";
 const vscode_1 = require("vscode");
-const HelloWorldPanel_1 = require("./panels/HelloWorldPanel");
 const DictionaryTablePanel_1 = require("./panels/DictionaryTablePanel");
 function activate(context) {
-    // Create the show hello world command
-    const showHelloWorldCommand = vscode_1.commands.registerCommand("hello-world.showHelloWorld", () => {
-        HelloWorldPanel_1.HelloWorldPanel.render(context.extensionUri);
-    });
     console.log("Hey from the extension!");
     const showDictionaryTableCommand = vscode_1.commands.registerCommand("react.showDictionaryTable", () => __awaiter(this, void 0, void 0, function* () {
-        //   const uri = vscode.Uri.joinPath(context.extensionUri, 'dictionary.dictionary');
-        //   const fileData = await (vscode.workspace.fs.readFile(uri));
-        //   const dataString = new TextDecoder().decode(fileData);
-        // console.log(dataString);
         DictionaryTablePanel_1.DictionaryTablePanel.render(context.extensionUri);
     }));
     // Add command to the extension context
-    context.subscriptions.push(showHelloWorldCommand);
     context.subscriptions.push(showDictionaryTableCommand);
 }
 exports.activate = activate;
