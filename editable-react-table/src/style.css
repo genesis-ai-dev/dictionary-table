@@ -176,6 +176,56 @@ html {
   background-color: var(--vscode-button-hoverBackground);
 }
 
+.remove-button {
+  position: absolute;
+  top: 0;
+  /*right: 0; */
+  /* bottom: 0; */
+  left: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px; /* Adjust padding as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* Ensures the button is above the table */
+}
+
+.remove-button svg {
+  height: 48px; /* Adjust size as needed */
+  width: 48px; /* Adjust size as needed */
+  fill: var(--vscode-button-foreground); /* Use VS Code theme color for the icon */
+}
+
+.remove-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.remove-button:hover:not(:disabled) {
+  background-color: var(--vscode-button-hoverBackground); /* Use VS Code theme color for hover state */
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Aligns the button to the right */
+  padding: 10px;
+}
+
+.table-container {
+  position: relative;
+  padding-top: 50px; 
+}
+
+.remove-button-container {
+  position: absolute;
+  right: 0; /* Aligns the button to the right */
+  top: -50px; /* Adjusts the vertical position to float above the table */
+  z-index: 10; /* Ensures the button is above the table */
+}
+
 .checkbox-container {
   display: flex;
   align-items: center;

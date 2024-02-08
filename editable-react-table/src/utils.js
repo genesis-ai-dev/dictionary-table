@@ -62,6 +62,7 @@ export const ActionTypes = Object.freeze({
   DELETE_COLUMN: 'delete_column',
   ENABLE_RESET: 'enable_reset',
   LOAD_DATA: 'loaddata',
+  REMOVE_CHECKED_ROWS: 'remove_checked_rows',
 });
 
 export const DataTypes = Object.freeze({

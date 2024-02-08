@@ -149,7 +149,6 @@ class DictionaryTablePanel {
      */
     _setWebviewMessageListener(webview, uri) {
         webview.onDidReceiveMessage((message) => __awaiter(this, void 0, void 0, function* () {
-            console.log({ message });
             const command = message.command;
             const data = message.data;
             switch (command) {
@@ -165,6 +164,12 @@ class DictionaryTablePanel {
                     console.log('The data that would be written to file, encoded:');
                     console.log({ fileData });
                     return;
+                case 'confirmRemove':
+                    const confirmed = yield vscode_1.window.showInformationMessage(`Do you want to remove ${message.count} items?`, { modal: true }, 'Yes', 'No');
+                    if (confirmed === 'Yes') {
+                        webview.postMessage({ command: 'removeConfirmed' });
+                    }
+                    break;
             }
         }), undefined, this._disposables);
     }

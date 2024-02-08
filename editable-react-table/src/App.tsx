@@ -9,9 +9,11 @@ import {
   transformToDictionaryFormat,
   ActionTypes,
   DataTypes,
+  Constants,
 } from './utils';
 import update from 'immutability-helper';
 import { Dictionary } from 'codex-types';
+import Trash from './img/Trash';
 
 
 function reducer(state: any, action: any) {
@@ -193,7 +195,11 @@ function reducer(state: any, action: any) {
         // skipReset: false,
         dictionary: action.dictionary,
       };
-
+    case ActionTypes.REMOVE_CHECKED_ROWS:
+      return {
+        ...state,
+        data: state.data.filter((row: any) => !row[Constants.CHECKBOX_COLUMN_ID]),
+      };
 
     default:
       return state;
@@ -251,7 +257,10 @@ function App() {
           });
           break;
         }
-      }
+        case 'removeConfirmed':
+          dispatch({ type: ActionTypes.REMOVE_CHECKED_ROWS });
+          break;
+        }
     };
     window.addEventListener('message', handleReceiveMessage);
 
@@ -261,7 +270,13 @@ function App() {
     };
   }, []);
 
-
+  const removeCheckedRows = () => {
+    const checkedRowsCount = state.data.filter((row: any) => row[Constants.CHECKBOX_COLUMN_ID]).length;
+    vscode.postMessage({
+      command: 'confirmRemove',
+      count: checkedRowsCount,
+    });
+  };
 
   return (
     <div
@@ -270,20 +285,36 @@ function App() {
         width: '100vw',
         height: '100vh',
         padding: 10,
+
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <div style={{ marginBottom: 40, marginTop: 40 }}>
         <h1>Dictionary</h1>
       </div>
 
-      <Table
-        columns={state.columns}
-        data={state.data}
-        dispatch={dispatch}
-        skipReset={state.skipReset}
+      <div className="app-container">
+        <div className="table-container">
+          
+          <button
+            onClick={removeCheckedRows}
+            disabled={!state.data.some((row: any) => row[Constants.CHECKBOX_COLUMN_ID])}
+            className="remove-button" // Add a class for styling
+            title="Remove selected rows" // Tooltip for the button
+          >
+            <Trash />
+          </button>
+          <Table
+            columns={state.columns}
+            data={state.data}
+            dispatch={dispatch}
+            skipReset={state.skipReset}
 
-      />
+          />
+        </div>
       <div id="popper-portal"></div>
+      </div>
     </div>
   );
 }

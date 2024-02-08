@@ -162,7 +162,6 @@ export class DictionaryTablePanel {
    */
   private _setWebviewMessageListener(webview: Webview, uri: any) {
     webview.onDidReceiveMessage(async (message) => {
-      console.log({ message });
       const command = message.command;
       const data = message.data;
 
@@ -179,6 +178,17 @@ export class DictionaryTablePanel {
           console.log('The data that would be written to file, encoded:');
           console.log({ fileData });
           return;
+        case 'confirmRemove':
+          const confirmed = await window.showInformationMessage(
+            `Do you want to remove ${message.count} items?`,
+            { modal: true },
+            'Yes',
+            'No'
+          );
+          if (confirmed === 'Yes') {
+            webview.postMessage({ command: 'removeConfirmed' });
+          }
+          break;
       }
     },
     undefined,
