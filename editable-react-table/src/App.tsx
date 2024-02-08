@@ -1,5 +1,5 @@
 import { vscode } from "./utilities/vscode";
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import './style.css';
 import Table from './Table';
 import {
@@ -193,6 +193,8 @@ function reducer(state: any, action: any) {
         // skipReset: false,
         dictionary: action.dictionary,
       };
+
+
     default:
       return state;
   }
@@ -259,6 +261,8 @@ function App() {
     };
   }, []);
 
+
+
   return (
     <div
       className="overflow-hidden"
@@ -269,13 +273,15 @@ function App() {
       }}
     >
       <div style={{ marginBottom: 40, marginTop: 40 }}>
-        <h1>Editable React Table - Demo</h1>
+        <h1>Dictionary</h1>
       </div>
+
       <Table
         columns={state.columns}
         data={state.data}
         dispatch={dispatch}
         skipReset={state.skipReset}
+
       />
       <div id="popper-portal"></div>
     </div>

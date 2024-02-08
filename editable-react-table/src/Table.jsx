@@ -74,8 +74,14 @@ export default function Table({
     useSortBy
   );
 
+
+  
+
+
   const RenderRow = React.useCallback(
+    
     ({ index, style }) => {
+
       const row = rows[index];
       prepareRow(row);
       return (
@@ -86,14 +92,6 @@ export default function Table({
             </div>
           ))}
         </div>
-        
-        // <div {...row.getRowProps({ style })} className="tr">
-        //   {row.cells.map(cell => (
-        //     <div {...cell.getCellProps()} className="td">
-        //       {cell.render('Cell')}
-        //     </div>
-        //   ))}
-        // </div>
       );
     },
     [prepareRow, rows]

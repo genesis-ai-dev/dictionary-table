@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { ActionTypes } from '../utils';
 
 export default function CheckboxCell({
+  initialValue,
   columnId,
   rowIndex,
   dataDispatch,
 }) {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(initialValue);
 
   const handleChange = (e) => {
     setChecked(e.target.checked);
@@ -19,10 +20,13 @@ export default function CheckboxCell({
   };
 
   return (
+  <div className="checkbox-container">
     <input
-      type="checkbox"
-      checked={checked}
-      onChange={handleChange}
-    />
+        type="checkbox"
+        checked={checked}
+        onChange={handleChange}
+        className="checkbox-large"
+      />
+  </div>
   );
 }

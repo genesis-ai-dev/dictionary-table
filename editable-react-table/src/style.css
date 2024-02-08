@@ -176,6 +176,18 @@ html {
   background-color: var(--vscode-button-hoverBackground);
 }
 
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center horizontally if needed */
+  height: 100%; /* Ensure the container fills the cell */
+}
+
+.checkbox-large {
+  transform: scale(2.5); /* Adjust scale as needed */
+  margin: 5px; /* Optional: add some margin if needed */
+}
+
 .add-row {
   /* color: #9e9e9e; */
   color: var(--vscode-button-foreground);

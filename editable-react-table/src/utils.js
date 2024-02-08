@@ -14,12 +14,11 @@ export function transformToTableData(dictionary) {
   let checkboxColumn = {
     // id: Constants.ADD_COLUMN_ID,
     id: Constants.CHECKBOX_COLUMN_ID,
-    label: '.',
+    label: ' ',
     accessor: 'checkbox_column',
-    minWidth: 30,
-    disableResizing: true,
+    minWidth: 20,
+    // disableResizing: true,
     dataType: DataTypes.CHECKBOX,
-    options: [],
   };
 
   // Create columns in required format and according to the first entry in the data
@@ -42,7 +41,13 @@ export function transformToTableData(dictionary) {
 
 export function transformToDictionaryFormat(tableData, dictionary) {
   // Place row entries back into the dictionary
-  dictionary.entries = tableData.data;
+  // dictionary.entries = tableData.data;
+  // Modify here to remove checkbox data from tableData.data
+  dictionary.entries = tableData.data.map(row => {
+    const newRow = { ...row };
+    delete newRow[Constants.CHECKBOX_COLUMN_ID]; // Assuming this is the key for checkbox data
+    return newRow;
+  });
   return dictionary;
 }
 

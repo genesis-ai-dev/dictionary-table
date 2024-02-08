@@ -44,6 +44,7 @@ export default function Cell({
       case DataTypes.CHECKBOX:
         return (
           <CheckboxCell
+            initialValue={initialValue}
             rowIndex={index}
             columnId={id}
             dataDispatch={dataDispatch}
