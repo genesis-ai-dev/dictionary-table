@@ -8,7 +8,11 @@ export function randomColor() {
 
 
 export function transformToTableData(dictionary) {
-  const data = dictionary.entries;
+  // const data = dictionary.entries;
+  const data = dictionary.entries.map(entry => ({
+    ...entry,
+    metadata: JSON.stringify(entry.metadata) // Stringify metadata field
+  }));
 
   let columns = [];
   let checkboxColumn = {
